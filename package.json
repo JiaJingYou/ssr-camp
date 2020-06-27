@@ -1,0 +1,29 @@
+{
+  "name": "ssr-camp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:client": "webpack --config webpack.client.js --watch",
+    "dev:server": "webpack --config webpack.server.js --watch",
+    "dev:start": "nodemon --watch build --exec node \"./build/bundle.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-react": "^7.10.1",
+    "bable-loader": "0.0.1-security",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "babel-loader": "^8.1.0",
+    "express": "^4.17.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}

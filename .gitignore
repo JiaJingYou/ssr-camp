@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+build/
+client/
+public/
+npm-debug.log
