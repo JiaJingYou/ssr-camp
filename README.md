@@ -6,7 +6,7 @@ react-ssr redux 同构
 ## SSR，CSR
 ## concurrently
       将几条启动命令合并执行 npm start
-     "start": "concurrently \"npm run dev:client\" \"npm run dev:server\" \"npm run dev:start\""
+     "start": "concurrently \"npm run dev:client\" \"npm run dev:server\" \"npm run dev:start\" \"npm run dev:mock\""
 ## Route 
       server
             react-router-dom:<StaticRouter location={req.url}>{App}<StaticRouter>
@@ -26,3 +26,4 @@ react-ssr redux 同构
             1、首屏的异步数据怎么获取
             2、路由加载时怎么知道哪些数据需要获取
             3、多个数据怎么加载到props里
+### server层获取异步数据
