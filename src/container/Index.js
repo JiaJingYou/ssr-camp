@@ -4,14 +4,13 @@ import { getIndexList } from '../store'
 function Index(props) {
     const [count, setCount] = useState(1)
     useEffect(()=>{
-        props.getIndexList()
+        if(!props.list.length){
+            props.getIndexList()
+        }
+        
     })
     return <div>
-        <h1>React-ssr1</h1>
-
-        <span>count:{count}</span>
-        <button onClick={()=>setCount(count+1)}>累加</button>
-
+        <h1>我是index模块</h1>
         <hr/>
         <ul>
             {props.list.map(item=>{
@@ -20,7 +19,9 @@ function Index(props) {
         </ul>
     </div>
 }
-
+Index.loadData = (store) =>{
+    return store.dispatch(getIndexList())
+}
 export default connect(
     state=>({list: state.index.list}),
     {getIndexList}

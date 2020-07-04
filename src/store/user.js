@@ -2,33 +2,36 @@ import axios  from "axios"
 
 
 
-const GET_LIST = 'INDEX/GET_LIST'
+const GET_LIST = 'INDEX/GET_USER'
 
-const changelist = list=>({
+const changelist = info=>({
     type: GET_LIST,
-    list
+    info
 })
 
-export const getIndexList = server => {
+export const getUserInfo = server => {
     return (dispatch, getState, axiosInstance) => {
-        return axios.get('http://localhost:9090/api/user/list')
+        return axios.get('http://localhost:9090/api/user/info')
             .then(res=>{
-                const {list} = res.data
-                console.log("list", list);
-                dispatch(changelist(list))
+                const {info} = res.data
+                console.log("info", info);
+                
+                dispatch(changelist(info))
             })
     }
 }
 
 const defaultState = {
-    list: []
+    info: {}
 }
 export default (state=defaultState, action) => {
     switch (action.type) {
         case GET_LIST:
+            console.log(action.info);
+            
             const newState = {
                 ...state,
-                list: action.list
+                info: action.info
             }
             return newState
     
