@@ -1,7 +1,11 @@
 # ssr-camp
 react-ssr redux 同构
 
-## 同构架构思想
+## ssr思路：
+      1.同构架构
+      2.puppeteer实现ssr
+      
+## 1.同构架构思想
 ### 1.
 ## SSR，CSR
 ## concurrently
@@ -38,8 +42,65 @@ react-ssr redux 同构
             })
       2：applyMiddleware(thunk.withExtraArgument(serverAxios))
       3：server层做转发
-            http-proxy-middleware
+            const { createProxyMiddleware } = require('http-proxy-middleware');
             app.use(
                 '/api',
-                proxy({target: 'http://localhost:9090', changeOrigin: true})
+                createProxyMiddleware({target: 'http://localhost:9090', changeOrigin: true})
             )
+## css支持
+      node端documnet报错问题：
+      webpack.server.js：
+            isomorphic-style-loader(解决同构问题的style-loader)
+            use: ['isomorphic-style-loader', 'css-loader']
+      
+      细节优化：
+            use: ['isomorphic-style-loader', {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true
+                        }
+                    } ]
+            高阶组件：
+            function withStyle(Comp, styles) {
+                return function (props) {
+                    if(props.staticContext) {
+                        props.staticContext.css.push(styles._getCss())
+                    }
+                    return <Comp {...props}></Comp>
+                }
+            }
+## 放弃seo的降级渲染实现优化
+      设置ssr开关，用户量的的情况下关闭ssr，打开csr
+      
+      webpack.client.js：
+          plugins:[
+              new HtmlWebpackPlugin({
+                  filename: 'index.csr.html',
+                  template: 'src/index.csr.html',
+                  inject: true
+              })
+          ]
+      client/index.js：
+            if(window.__context){
+                //ssr
+                ReactDom.hydrate(Page, document.getElementById('root'))
+            } else {
+                //csr
+                ReactDom.render(Page, document.getElementById('root'))
+            }
+      server/index.js：
+            if(req.query._mode = 'csr'){
+                    const filename = path.resolve(process.cwd(), 'public/index.csr.html')
+                    const html = fs.readFileSync(filename, 'utf-8')
+                    return res.send(html)
+                }
+## 2.puppeteer实现ssr
+
+      const url = 'http://localhost:9093/' + req.url
+          const browser = await puppeteer.launch()
+          const page = await browser.newPage()
+          await page.goto(url, {
+              waitUntil: ['networkidle0']
+          })
+          const html = await page.content()
+          res.send(html)
