@@ -26,4 +26,20 @@ react-ssr redux 同构
             1、首屏的异步数据怎么获取
             2、路由加载时怎么知道哪些数据需要获取
             3、多个数据怎么加载到props里
-### server层获取异步数据
+      ### server层获取异步数据
+      ### 关于一个页面两个请求的容错处理
+      ### axios代理实现：
+      1：
+            const serverAxios = axios.create({
+                baseURL: 'http://localhost:9090/'
+            })
+            const clientAxios = axios.create({
+                baseURL: '/'
+            })
+      2：applyMiddleware(thunk.withExtraArgument(serverAxios))
+      3：server层做转发
+            http-proxy-middleware
+            app.use(
+                '/api',
+                proxy({target: 'http://localhost:9090', changeOrigin: true})
+            )
