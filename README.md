@@ -8,6 +8,7 @@ react-ssr redux 同构
 ## 1.同构架构思想
 ### 1.
 ## SSR，CSR
+      能够做到用户量较少的时候使用ssr，用户量大切换到csr
 ## concurrently
       将几条启动命令合并执行 npm start
      "start": "concurrently \"npm run dev:client\" \"npm run dev:server\" \"npm run dev:start\" \"npm run dev:mock\""
