@@ -17,6 +17,16 @@ module.exports={
             options: {
                 presets: ['@babel/preset-react', ['@babel/preset-env']]
             }
+        },{
+            test: /\.css$/,
+            exclude: '/node_modules/',
+            use: ['isomorphic-style-loader', 
+            {
+                loader: 'css-loader',
+                options: {
+                    modules: true
+                }
+            }]
         }]
     }
 }

@@ -1,7 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import { getIndexList } from '../store'
+import styles from './Index.css'
+import withStyle from '../withStyle'
 function Index(props) {
+    // console.log(styles._getCss());
+    // console.log('props111111111111', props.staticContext.css);
+    
     const [count, setCount] = useState(1)
     useEffect(()=>{
         if(!props.list.length){
@@ -10,7 +15,7 @@ function Index(props) {
         
     })
     return <div>
-        <h1>我是index模块</h1>
+        <h1 className={styles.container}>我是index模块</h1>
         <hr/>
         <ul>
             {props.list.map(item=>{
@@ -19,10 +24,13 @@ function Index(props) {
         </ul>
     </div>
 }
-Index.loadData = (store) =>{
-    return store.dispatch(getIndexList())
-}
-export default connect(
+
+let newIndex = connect(
     state=>({list: state.index.list}),
     {getIndexList}
-)(Index)
+)(withStyle(Index, styles))
+
+newIndex.loadData = (store) =>{
+    return store.dispatch(getIndexList())
+}
+export default newIndex

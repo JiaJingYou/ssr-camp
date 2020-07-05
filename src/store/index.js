@@ -1,5 +1,4 @@
-import axios  from "axios"
-
+// import axios  from "axios"
 
 
 const GET_LIST = 'INDEX/GET_LIST'
@@ -10,8 +9,8 @@ const changelist = list=>({
 })
 
 export const getIndexList = server => {
-    return (dispatch, getState, axiosInstance) => {
-        return axios.get('http://localhost:9090/api/user/list')
+    return (dispatch, getState, $axios) => {
+        return $axios.get('api/user/list')
             .then(res=>{
                 const {list} = res.data
                 console.log("list", list);
